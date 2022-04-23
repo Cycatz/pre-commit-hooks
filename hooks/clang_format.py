@@ -22,7 +22,8 @@ class ClangFormatCmd(FormatterCmd):
     def run(self):
         """Run clang-format. Error if diff is incorrect."""
         for filename in self.files:
-            self.compare_to_formatted(filename)
+            if ".clang-format" not in filename:
+                self.compare_to_formatted(filename)
         if self.returncode != 0:
             sys.stdout.buffer.write(self.stderr)
             sys.exit(self.returncode)
